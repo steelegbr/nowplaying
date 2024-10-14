@@ -1,4 +1,7 @@
 using Auth0.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
+using NowPlaying.Database;
+using NowPlaying.Repositories;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +32,13 @@ builder.Services.AddAuth0WebAppAuthentication(
         options.UseRefreshTokens = true;
     }
 );
+
+// Register services
+
+builder.Services.AddDbContext<NowPlayingContext>(
+    options => options.UseInMemoryDatabase(builder.Configuration["DbConnectionString"])
+);
+builder.Services.AddScoped<IStationRepository, EfStationRepository>();
 
 // Build the app
 

@@ -22,7 +22,7 @@ public class MobileAuthController : Controller
     {
         logger.LogInformation("Authentication request for {scheme} scheme", schemeDto.Scheme);
         var auth = await Request.HttpContext.AuthenticateAsync(schemeDto.Scheme);
-        logger.LogInformation("Got auth data with success={success}, principal={principal}, token={access_token}", auth.Succeeded, auth.Principal, auth.Properties.GetTokenValue("refresh_token"));
+        logger.LogInformation("Got auth data with success={success}", auth.Succeeded);
 
         if (!auth.Succeeded
 				|| auth?.Principal == null

@@ -7,4 +7,9 @@ public class NowPlayingContext : DbContext
 {
     public DbSet<Station> Stations { get; set; }
     public DbSet<Song> Songs { get; set; }
+
+    public NowPlayingContext(DbContextOptions<NowPlayingContext> options) : base(options)
+    {
+        
+    }
 }

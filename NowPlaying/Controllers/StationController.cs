@@ -89,7 +89,7 @@ public class StationController : Controller
         return Ok(
             new NowPlayingResultDto
             {
-                IsPlayingASong = true
+                IsPlayingASong = true,
                 Song = new NowPlayingDto
                 {
                     Artist = station.Song.Artist,
