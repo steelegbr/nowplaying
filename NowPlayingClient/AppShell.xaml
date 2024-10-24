@@ -8,8 +8,7 @@
     Title="NowPlayingClient">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate local:Pages.LoginPage}"
+        Route="LoginPage" />
 
 </Shell>

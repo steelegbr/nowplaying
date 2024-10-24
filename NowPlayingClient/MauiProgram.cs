@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using NowPlayingClient.Pages;
+using NowPlayingClient.Services;
+using Serilog;
 
 namespace NowPlayingClient;
 
@@ -18,6 +21,17 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+
+		var loggingPath = Path.Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "log.txt");
+		builder.Services.AddSerilog(
+			new LoggerConfiguration()
+				.WriteTo.File(loggingPath, rollingInterval: RollingInterval.Day)
+				.CreateLogger()
+			);
+
+		builder.Services.AddSingleton<LoginPageViewModel>();
+		builder.Services.AddSingleton<LoginPage>();
+		builder.Services.AddSingleton<IAuthenticationService, ApiAuthenticationService>();
 
 		return builder.Build();
 	}
