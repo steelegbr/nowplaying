@@ -1,4 +1,32 @@
+<DomainBlock>:
+    size_hint_y: None
+    Label:
+        bold: True
+        font_size: 24
+        size_hint_x: 0.5
+        text: "Domain"
+    TextInput:
+        id: domain
+        multiline: False
+        on_text: root.change_domain(self.text)
+        size_hint_x: 1.0
+
+<ClientIdBlock>:
+    size_hint_y: None
+    Label:
+        bold: True
+        font_size: 24
+        size_hint_x: 0.5
+        text: "Client ID"
+    TextInput:
+        id: client_id
+        multiline: False
+        on_text: root.change_client_id(self.text)
+        size_hint_x: 1.0
+
 <HomeView>:
     cols: 1
     padding: [5, 0]
     spacing: [0, 20]
+    DomainBlock:
+    ClientIdBlock:

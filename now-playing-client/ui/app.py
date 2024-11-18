@@ -1,5 +1,5 @@
 from kivy.app import App
-from ui.view import HomeView
+from ui.views import HomeView
 
 
 class NowPlayingApp(App):

@@ -8,6 +8,7 @@ authors = ["Marc Steele <steelegbr@gmail.com>"]
 python = "^3.12"
 kivy = "^2.3.0"
 pydantic = "^2.9.2"
+auth0-python = "^4.7.2"
 
 
 [tool.poetry.group.dev.dependencies]
