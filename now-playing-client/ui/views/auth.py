@@ -1,7 +1,10 @@
 from kivy.clock import Clock
+from kivy.properties import ListProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
+from services.authentication import AuthenticationService, AuthenticationServiceState
 from services.logging import get_logger, Logger
 from services.settings import SettingsService
+from typing import Dict, List
 
 
 class AuthUpdater:
@@ -96,3 +99,38 @@ class ClientIdBlock(BoxLayout):
 
     def change_client_id(self, client_id: str):
         self.__auth_updater.trigger_delayed_save()
+
+
+class AuthActionBlock(BoxLayout):
+    __auth_service: AuthenticationService
+
+    state_colour = ListProperty([1, 1, 1, 1])
+    state_text = StringProperty("")
+
+    AUTH_SERVICE_BACKGROUND_COLOUR_MAP: Dict[
+        AuthenticationServiceState, List[float]
+    ] = {
+        AuthenticationServiceState.Unauthenticated: [0.94, 0.55, 0.2, 1],
+        AuthenticationServiceState.DeviceCode: [0.94, 0.55, 0.2, 1],
+        AuthenticationServiceState.Error: [1, 0, 0, 1],
+    }
+
+    AUTH_SERVICE_DESCRIPTION_MAP: Dict[AuthenticationServiceState, str] = {
+        AuthenticationServiceState.Error: "Error",
+        AuthenticationServiceState.DeviceCode: "Obtaining Device Code",
+        AuthenticationServiceState.Unauthenticated: "Unauthenticated",
+    }
+
+    def __init__(
+        self, auth_service: AuthenticationService = AuthenticationService(), **kwargs
+    ):
+        super().__init__(**kwargs)
+        self.__auth_service = auth_service
+        self.__auth_service.register_callback(self.__auth_service_callback)
+
+    def __auth_service_callback(self, state: AuthenticationServiceState):
+        self.state_colour = self.AUTH_SERVICE_BACKGROUND_COLOUR_MAP[state]
+        self.state_text = self.AUTH_SERVICE_DESCRIPTION_MAP[state]
+
+    def trigger_auth(self):
+        self.__auth_service.authenticate()

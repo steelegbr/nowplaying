@@ -24,9 +24,30 @@
         on_text: root.change_client_id(self.text)
         size_hint_x: 1.0
 
+<AuthActionBlock>:
+    height: "45dp"
+    size_hint_y: None
+    Label:
+        canvas.before:
+            Color:
+                rgba: root.state_colour
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        bold: True
+        font_size: 32
+        size_hint_x: 1
+        text: root.state_text
+    Button:
+        font_size: 32
+        on_press: root.trigger_auth()
+        size_hint_x: 0.5
+        text: "Authenticate"
+
 <HomeView>:
     cols: 1
     padding: [5, 0]
     spacing: [0, 20]
     DomainBlock:
     ClientIdBlock:
+    AuthActionBlock:
