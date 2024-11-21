@@ -4,6 +4,7 @@ from models.dto.authentication import DeviceCodePayload, DeviceCodeResponse
 from services.settings import SettingsService
 from services.logging import get_logger, Logger
 from typing import Callable, List
+from webbrowser import open_new
 
 
 class AuthenticationServiceState(StrEnum):
@@ -54,14 +55,28 @@ class AuthenticationService:
         for callback in self.__callbacks:
             callback(self.__state)
 
+    def __save_device_code(self, device_code_response: DeviceCodeResponse):
+        settings = self.__settings_service.get()
+        settings.device_code = device_code_response.user_code
+        self.__settings_service.save(settings)
+
+    def __launch_browser(self, device_code_response: DeviceCodeResponse):
+        self.__logger.info(
+            f"{self.LOG_PREFIX}: Launching browser to {device_code_response.verification_uri_complete}"
+        )
+        open_new(str(device_code_response.verification_uri_complete))
+
     def authenticate(self):
+
+        # TODO: Attempt authentication with existing device code
+
+        # Get a new device code
 
         try:
             self.__set_state(AuthenticationServiceState.DeviceCode)
             device_code_response = self.__get_device_code()
-            self.__logger.info(
-                f"{self.LOG_PREFIX}: Supply code {device_code_response.user_code} to URL {device_code_response.verification_uri_complete}"
-            )
+            self.__save_device_code(device_code_response)
+            self.__launch_browser(device_code_response)
         except HTTPError as ex:
             self.__logger.error(
                 f"{self.LOG_PREFIX}: failed authentication request with reason %s and response %s",
@@ -69,6 +84,8 @@ class AuthenticationService:
                 ex.response.json(),
             )
             self.__set_state(AuthenticationServiceState.Error)
+
+        # TODO: Trigger the wait for valid authentication into a thread to not lock up the UI
 
     def deregister_callback(
         self, callback: Callable[[AuthenticationServiceState], None]
