@@ -1,5 +1,6 @@
+from constants.headers import JSON_POST_HEADERS
 from enum import StrEnum
-from requests import HTTPError, post
+from kivy.network.urlrequest import UrlRequest
 from models.dto.authentication import DeviceCodePayload, DeviceCodeResponse
 from services.settings import SettingsService
 from services.logging import get_logger, Logger
@@ -11,6 +12,9 @@ class AuthenticationServiceState(StrEnum):
     Unauthenticated = "UNAUTHENTICATED"
     Error = "ERROR"
     DeviceCode = "DEVICE_CODE"
+    AwaitingUserAuth = "AWAIT_USER_AUTH"
+    TimedOut = "TIMED_OUT"
+    Authenticated = "AUTHENTICATED"
 
 
 class AuthenticationService:
@@ -44,21 +48,36 @@ class AuthenticationService:
             client_id=settings.client_id, scope=self.SCOPE_OPENID
         )
 
-        response = post(
-            f"https://{settings.domain}/oauth/device/code", data=payload.model_dump()
+        UrlRequest(
+            f"https://{settings.domain}/oauth/device/code",
+            on_success=self.handle_device_code_success,
+            on_failure=self.handle_device_code_failure,
+            on_error=self.handle_device_code_error,
+            req_body=payload.model_dump_json(),
+            req_headers=JSON_POST_HEADERS,
         )
-        response.raise_for_status()
-        return DeviceCodeResponse.model_validate(response.json())
 
     def __set_state(self, state: AuthenticationServiceState):
         self.__state = state
         for callback in self.__callbacks:
             callback(self.__state)
 
-    def __save_device_code(self, device_code_response: DeviceCodeResponse):
-        settings = self.__settings_service.get()
-        settings.device_code = device_code_response.user_code
-        self.__settings_service.save(settings)
+    def handle_device_code_success(self, request, result):
+        self.__logger.info(f"{self.LOG_PREFIX}: successful device code request")
+        device_code_response = DeviceCodeResponse.model_validate(result)
+        self.__launch_browser(device_code_response)
+
+    def handle_device_code_failure(self, request, result):
+        self.__logger.error(
+            f"{self.LOG_PREFIX}: failed device code request with result %s", result
+        )
+        self.__set_state(AuthenticationServiceState.Error)
+
+    def handle_device_code_error(self, request, error: str):
+        self.__logger.error(
+            f"{self.LOG_PREFIX}: failed device code request with reason %s", error
+        )
+        self.__set_state(AuthenticationServiceState.Error)
 
     def __launch_browser(self, device_code_response: DeviceCodeResponse):
         self.__logger.info(
@@ -67,25 +86,17 @@ class AuthenticationService:
         open_new(str(device_code_response.verification_uri_complete))
 
     def authenticate(self):
-
-        # TODO: Attempt authentication with existing device code
-
-        # Get a new device code
-
-        try:
+        if self.get_state() in [
+            AuthenticationServiceState.Error,
+            AuthenticationServiceState.Unauthenticated,
+        ]:
             self.__set_state(AuthenticationServiceState.DeviceCode)
-            device_code_response = self.__get_device_code()
-            self.__save_device_code(device_code_response)
-            self.__launch_browser(device_code_response)
-        except HTTPError as ex:
-            self.__logger.error(
-                f"{self.LOG_PREFIX}: failed authentication request with reason %s and response %s",
-                ex,
-                ex.response.json(),
+            self.__get_device_code()
+        else:
+            self.__logger.warning(
+                f"{self.LOG_PREFIX}: cannot start authentication attempt while in %s state",
+                self.get_state(),
             )
-            self.__set_state(AuthenticationServiceState.Error)
-
-        # TODO: Trigger the wait for valid authentication into a thread to not lock up the UI
 
     def deregister_callback(
         self, callback: Callable[[AuthenticationServiceState], None]

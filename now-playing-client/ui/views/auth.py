@@ -113,12 +113,18 @@ class AuthActionBlock(BoxLayout):
         AuthenticationServiceState.Unauthenticated: [0.94, 0.55, 0.2, 1],
         AuthenticationServiceState.DeviceCode: [0.94, 0.55, 0.2, 1],
         AuthenticationServiceState.Error: [1, 0, 0, 1],
+        AuthenticationServiceState.AwaitingUserAuth: [0.94, 0.55, 0.2, 1],
+        AuthenticationServiceState.TimedOut: [1, 0, 0, 1],
+        AuthenticationServiceState.Authenticated: [0.13, 0.55, 0.1, 1],
     }
 
     AUTH_SERVICE_DESCRIPTION_MAP: Dict[AuthenticationServiceState, str] = {
         AuthenticationServiceState.Error: "Error",
         AuthenticationServiceState.DeviceCode: "Obtaining Device Code",
         AuthenticationServiceState.Unauthenticated: "Unauthenticated",
+        AuthenticationServiceState.AwaitingUserAuth: "Awaiting User Authentication",
+        AuthenticationServiceState.TimedOut: "Timed Out",
+        AuthenticationServiceState.Authenticated: "Authenticated",
     }
 
     def __init__(

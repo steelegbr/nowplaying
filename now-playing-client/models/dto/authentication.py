@@ -7,5 +7,8 @@ class DeviceCodePayload(BaseModel):
 
 
 class DeviceCodeResponse(BaseModel):
-    verification_uri_complete: HttpUrl
+    device_code: str
+    expires_in: int
+    interval: int
     user_code: str
+    verification_uri_complete: HttpUrl
