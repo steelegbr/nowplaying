@@ -55,6 +55,7 @@ class AuthenticationService:
 
     def __set_state(self, state: AuthenticationServiceState):
         self.__state = state
+        self.__logger.info("%s: change state to %s", self.LOG_PREFIX, state)
         for callback in self.__callbacks:
             callback(self.__state)
 

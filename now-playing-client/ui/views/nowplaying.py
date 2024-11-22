@@ -42,3 +42,15 @@ class NowPlayingFileChooser(BoxLayout):
 
     def cancel(self):
         self.__popup.dismiss()
+
+
+class ArtistBlock(BoxLayout):
+    artist = StringProperty("")
+
+
+class TitleBlock(BoxLayout):
+    title = StringProperty("")
+
+
+class YearBlock(BoxLayout):
+    year = StringProperty("")

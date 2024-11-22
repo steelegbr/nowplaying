@@ -1,4 +1,11 @@
 from ui.views.auth import AuthActionBlock, ClientIdBlock, DomainBlock
+from ui.views.file import FileMonitorActionBlock
 from ui.views.home import HomeView
 from ui.views.http import BaseUrlBlock
-from ui.views.nowplaying import NowPlayingFileChooser, NowPlayingFileModal
+from ui.views.nowplaying import (
+    ArtistBlock,
+    NowPlayingFileChooser,
+    NowPlayingFileModal,
+    TitleBlock,
+    YearBlock,
+)

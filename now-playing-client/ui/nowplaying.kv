@@ -87,6 +87,62 @@
         on_text: root.change_base_url(self.text)
         size_hint_x: 1.0
 
+<FileMonitorActionBlock>:
+    height: "45dp"
+    size_hint_y: None
+    Label:
+        canvas.before:
+            Color:
+                rgba: root.status_colour
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        bold: True
+        font_size: 32
+        size_hint_x: 1
+        text: root.status_text
+    Button:
+        font_size: 32
+        on_press: root.toggle_file_monitor()
+        size_hint_x: 0.5
+        text: root.button_text
+
+<ArtistBlock>:
+    size_hint_y: None
+    Label:
+        bold: True
+        size_hint_x: 0.5
+        text: "Artist"
+    TextInput:
+        multiline: False
+        readonly: True
+        text: root.artist
+        size_hint_x: 1.0
+
+<TitleBlock>:
+    size_hint_y: None
+    Label:
+        bold: True
+        size_hint_x: 0.5
+        text: "Title"
+    TextInput:
+        multiline: False
+        readonly: True
+        text: root.title
+        size_hint_x: 1.0
+
+<YearBlock>:
+    size_hint_y: None
+    Label:
+        bold: True
+        size_hint_x: 0.5
+        text: "Year"
+    TextInput:
+        multiline: False
+        readonly: True
+        text: root.year
+        size_hint_x: 1.0
+
 <HomeView>:
     cols: 1
     padding: [5, 0]
@@ -96,3 +152,7 @@
     AuthActionBlock:
     NowPlayingFileChooser:
     BaseUrlBlock:
+    FileMonitorActionBlock:
+    ArtistBlock:
+    TitleBlock:
+    YearBlock:
