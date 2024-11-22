@@ -42,46 +42,55 @@ class AuthenticationService:
     def get_state(self) -> AuthenticationServiceState:
         return self.__state
 
-    def __get_device_code(self) -> DeviceCodeResponse:
-        settings = self.__settings_service.get()
-        payload = DeviceCodePayload(
-            client_id=settings.client_id, scope=self.SCOPE_OPENID
-        )
-
-        UrlRequest(
-            f"https://{settings.domain}/oauth/device/code",
-            on_success=self.handle_device_code_success,
-            on_failure=self.handle_device_code_failure,
-            on_error=self.handle_device_code_error,
-            req_body=payload.model_dump_json(),
-            req_headers=JSON_POST_HEADERS,
-        )
-
     def __set_state(self, state: AuthenticationServiceState):
         self.__state = state
         for callback in self.__callbacks:
             callback(self.__state)
 
+    def __get_device_code(self) -> DeviceCodeResponse:
+        settings = self.__settings_service.get()
+        payload = DeviceCodePayload(
+            client_id=settings.client_id, scope=self.SCOPE_OPENID
+        )
+        url = f"https://{settings.domain}/oauth/device/code"
+
+        self.__logger.info(
+            "%s: making device code request to %s with payload %s",
+            self.LOG_PREFIX,
+            url,
+            payload.model_dump(),
+        )
+        UrlRequest(
+            url,
+            on_success=self.handle_device_code_success,
+            on_failure=self.handle_failure,
+            on_error=self.handle_error,
+            req_body=payload.model_dump_json(),
+            req_headers=JSON_POST_HEADERS,
+        )
+
     def handle_device_code_success(self, request, result):
-        self.__logger.info(f"{self.LOG_PREFIX}: successful device code request")
+        self.__logger.info("%s: successful device code request", self.LOG_PREFIX)
         device_code_response = DeviceCodeResponse.model_validate(result)
         self.__launch_browser(device_code_response)
 
-    def handle_device_code_failure(self, request, result):
+    def handle_failure(self, request, result):
         self.__logger.error(
-            f"{self.LOG_PREFIX}: failed device code request with result %s", result
+            "%s: an authentication request with result %s", self.LOG_PREFIX, result
         )
         self.__set_state(AuthenticationServiceState.Error)
 
-    def handle_device_code_error(self, request, error: str):
+    def handle_error(self, request, error: str):
         self.__logger.error(
-            f"{self.LOG_PREFIX}: failed device code request with reason %s", error
+            "%s: an authentication code request with reason %s", self.LOG_PREFIX, error
         )
         self.__set_state(AuthenticationServiceState.Error)
 
     def __launch_browser(self, device_code_response: DeviceCodeResponse):
         self.__logger.info(
-            f"{self.LOG_PREFIX}: Launching browser to {device_code_response.verification_uri_complete}"
+            "%s: launching browser to %s",
+            self.LOG_PREFIX,
+            device_code_response.verification_uri_complete,
         )
         open_new(str(device_code_response.verification_uri_complete))
 
@@ -94,7 +103,8 @@ class AuthenticationService:
             self.__get_device_code()
         else:
             self.__logger.warning(
-                f"{self.LOG_PREFIX}: cannot start authentication attempt while in %s state",
+                "%s: cannot start authentication attempt while in %s state",
+                self.LOG_PREFIX,
                 self.get_state(),
             )
 
@@ -103,9 +113,9 @@ class AuthenticationService:
     ):
         if callback in self.__callbacks:
             self.__callbacks.remove(callback)
-        self.__logger.info(f"{self.LOG_PREFIX}: deregister callback %s", callback)
+        self.__logger.info("%s: deregister callback %s", self.LOG_PREFIX, callback)
 
     def register_callback(self, callback: Callable[[AuthenticationServiceState], None]):
         self.__callbacks.append(callback)
-        self.__logger.info(f"{self.LOG_PREFIX}: register callback %s", callback)
+        self.__logger.info("%s: register callback %s", self.LOG_PREFIX, callback)
         callback(self.__state)

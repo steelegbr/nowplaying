@@ -38,20 +38,20 @@ class AuthUpdater:
         self.__settings_service.save(settings)
 
     def trigger_delayed_save(self):
-        self.__logger.debug(f"{self.LOG_PREFIX}: Delayed save triggered")
+        self.__logger.debug("%s: Delayed save triggered", self.LOG_PREFIX)
         if self.__event:
-            self.__logger.debug(f"{self.LOG_PREFIX}: Removing existing trigger")
+            self.__logger.debug("%s: Removing existing trigger", self.LOG_PREFIX)
             self.__event.cancel()
 
-        self.__logger.debug(f"{self.LOG_PREFIX}: Scheduling delayed trigger")
+        self.__logger.debug("%s: Scheduling delayed trigger", self.LOG_PREFIX)
         self.__event = Clock.schedule_once(self.delayed_save_callback, self.SAVE_DELAY)
 
     def register_client_id_block(self, client_id_block):
-        self.__logger.info(f"{self.LOG_PREFIX}: Client ID block %s", client_id_block)
+        self.__logger.info("%s: Client ID block %s", self.LOG_PREFIX, client_id_block)
         self.__client_id_block = client_id_block
 
     def register_domain_block(self, domain_block):
-        self.__logger.info(f"{self.LOG_PREFIX}: domain block %s", domain_block)
+        self.__logger.info("%s: domain block %s", self.LOG_PREFIX, domain_block)
         self.__domain_block = domain_block
 
 
