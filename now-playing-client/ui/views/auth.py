@@ -1,3 +1,4 @@
+from constants.settings import SAVE_DELAY
 from kivy.clock import Clock
 from kivy.properties import ListProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
@@ -15,7 +16,6 @@ class AuthUpdater:
 
     instance: None
     LOG_PREFIX = "Authentication Updater"
-    SAVE_DELAY = 3
 
     def __new__(
         cls,
@@ -44,7 +44,7 @@ class AuthUpdater:
             self.__event.cancel()
 
         self.__logger.debug("%s: Scheduling delayed trigger", self.LOG_PREFIX)
-        self.__event = Clock.schedule_once(self.delayed_save_callback, self.SAVE_DELAY)
+        self.__event = Clock.schedule_once(self.delayed_save_callback, SAVE_DELAY)
 
     def register_client_id_block(self, client_id_block):
         self.__logger.info("%s: Client ID block %s", self.LOG_PREFIX, client_id_block)

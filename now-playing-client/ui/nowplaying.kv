@@ -74,6 +74,19 @@
         Button:
             text: "Cancel"
             on_release: root.cancel()
+
+<BaseUrlBlock>:
+    size_hint_y: None
+    Label:
+        bold: True
+        size_hint_x: 0.5
+        text: "Base URL"
+    TextInput:
+        id: base_url
+        multiline: False
+        on_text: root.change_base_url(self.text)
+        size_hint_x: 1.0
+
 <HomeView>:
     cols: 1
     padding: [5, 0]
@@ -82,3 +95,4 @@
     ClientIdBlock:
     AuthActionBlock:
     NowPlayingFileChooser:
+    BaseUrlBlock:
