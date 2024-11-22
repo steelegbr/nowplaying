@@ -25,6 +25,7 @@ public class EfStationRepository : IStationRepository
         logger.LogInformation("Creating station {name} with ID {id}", station.Name, station.Id);
 
         nowPlayingContext.Stations.Add(station);
+        nowPlayingContext.SaveChanges();
         return station;
     }
 
@@ -53,7 +54,7 @@ public class EfStationRepository : IStationRepository
 
     public Station? GetStationByName(string name)
     {
-        return nowPlayingContext.Stations.First(station => station.Name == name);
+        return nowPlayingContext.Stations.FirstOrDefault(station => station.Name == name);
     }
 
     public void SetNowPlaying(Station station, Song? song)
@@ -65,6 +66,7 @@ public class EfStationRepository : IStationRepository
             station.Song = null;
             nowPlayingContext.Stations.Update(station);
             nowPlayingContext.Songs.Remove(oldSong);
+            nowPlayingContext.SaveChanges();
         }
 
         if (song != null)
@@ -73,6 +75,7 @@ public class EfStationRepository : IStationRepository
             station.Song = song;
             nowPlayingContext.Songs.Add(song);
             nowPlayingContext.Stations.Update(station);
+            nowPlayingContext.SaveChanges();
         }
     }
 }
