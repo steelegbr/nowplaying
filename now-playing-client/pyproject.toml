@@ -9,6 +9,7 @@ python = "^3.12"
 kivy = "^2.3.0"
 pydantic = "^2.9.2"
 auth0-python = "^4.7.2"
+watchdog = "^6.0.0"
 
 
 [tool.poetry.group.dev.dependencies]

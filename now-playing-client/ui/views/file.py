@@ -45,3 +45,6 @@ class FileMonitorActionBlock(BoxLayout):
         self.button_text = self.FILE_MONITOR_SERVICE_BUTTON_TEXT_MAP[state]
         self.status_colour = self.FILE_MONITOR_SERVICE_COLOUR_MAP[state]
         self.status_text = self.FILE_MONITOR_SERVICE_MAP[state]
+
+    def toggle_file_monitor(self):
+        self.__file_monitor_service.toggle_service()

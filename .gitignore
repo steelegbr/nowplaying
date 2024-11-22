@@ -571,3 +571,7 @@ cython_debug/
 # Settings
 
 settings.ini
+
+# Now Playing Test File
+
+nowplaying.txt
