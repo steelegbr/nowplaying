@@ -42,6 +42,38 @@
         size_hint_x: 0.5
         text: "Authenticate"
 
+<NowPlayingFileChooser>:
+    height: "45dp"
+    size_hint_y: None
+    Label:
+        bold: True
+        size_hint_x: 0.5
+        text: "Now Playing File:"
+    TextInput:
+        id: path
+        multiline: False
+        readonly: True
+        size_hint_x: 1.0
+        text: root.path
+    Button:
+        font_size: 32
+        on_press: root.choose_file()
+        size_hint_x: 0.5
+        text: "Browse"
+
+<NowPlayingFileModal>:
+    orientation: "vertical"
+    FileChooserIconView:
+        id: filechooser
+    BoxLayout:
+        size_hint_y: None
+        height: 30
+        Button:
+            text: "Choose"
+            on_release: root.select(filechooser.selection)
+        Button:
+            text: "Cancel"
+            on_release: root.cancel()
 <HomeView>:
     cols: 1
     padding: [5, 0]
@@ -49,3 +81,4 @@
     DomainBlock:
     ClientIdBlock:
     AuthActionBlock:
+    NowPlayingFileChooser:
