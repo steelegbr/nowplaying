@@ -66,7 +66,9 @@ class AuthenticationService:
     def get_device_code(self) -> DeviceCodeResponse:
         settings = self.__settings_service.get()
         payload = DeviceCodePayload(
-            client_id=settings.client_id, scope=Scope.OpenIdProfile
+            audience=f"https://{settings.domain}/api/v2/",
+            client_id=settings.client_id,
+            scope=Scope.OpenIdProfile,
         )
         url = f"https://{settings.domain}/oauth/device/code"
 
@@ -116,6 +118,7 @@ class AuthenticationService:
 
     def handle_token_success(self, request, result):
         self.__logger.info("%s: successful token request", self.LOG_PREFIX)
+        print(result)
         self.__token_response = TokenResponse.model_validate(result)
         self.__set_state(AuthenticationServiceState.Authenticated)
 

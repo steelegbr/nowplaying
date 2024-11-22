@@ -1,6 +1,7 @@
 from enum import StrEnum
 from models.dto.nowplaying import NowPlayingDto
 from re import search
+from services.api import ApiService
 from services.logging import get_logger, Logger
 from services.settings import SettingsService
 from typing import Callable, List
@@ -15,6 +16,7 @@ class FileMonitorServiceState(StrEnum):
 
 
 class FileMonitorService(FileSystemEventHandler):
+    __api_service: ApiService
     __callbacks: List[Callable[[FileMonitorServiceState, NowPlayingDto], None]]
     __now_playing: NowPlayingDto
     __observer: ObserverType
@@ -27,11 +29,13 @@ class FileMonitorService(FileSystemEventHandler):
 
     def __new__(
         cls,
+        api_service: ApiService = ApiService(),
         logger: Logger = get_logger(__name__),
         settings_service: SettingsService = SettingsService(),
     ):
         if not cls.instance:
             cls.instance = super(FileMonitorService, cls).__new__(cls)
+            cls.instance.__api_service = api_service
             cls.instance.__callbacks = []
             cls.instance.__logger = logger
             cls.instance.__settings_service = settings_service
@@ -100,6 +104,7 @@ class FileMonitorService(FileSystemEventHandler):
                 "%s: detected now playing %s", self.LOG_PREFIX, self.__now_playing
             )
             self.__update_callbacks()
+            self.__api_service.update_now_playing(self.__now_playing)
         else:
             self.__now_playing = None
             self.__update_callbacks()

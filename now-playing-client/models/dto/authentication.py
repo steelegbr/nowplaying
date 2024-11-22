@@ -7,6 +7,7 @@ class Scope(StrEnum):
 
 
 class DeviceCodePayload(BaseModel):
+    audience: str
     client_id: str
     scope: Scope
 

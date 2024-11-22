@@ -1,5 +1,7 @@
-using Auth0.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NowPlaying.Database;
 using NowPlaying.Repositories;
 using Serilog;
@@ -20,16 +22,16 @@ builder.Services.AddSerilog(
 
 // Authentication
 
-builder.Services.AddAuth0WebAppAuthentication(
-    options => {
-        options.Domain = builder.Configuration["Auth0:Domain"];
-        options.ClientId = builder.Configuration["Auth0:ClientId"];
-        options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
-    }
-).WithAccessToken(
-    options => {
-        options.Audience = builder.Configuration["Auth0.:Audience"];
-        options.UseRefreshTokens = true;
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(
+    options => 
+    {
+        options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
+        options.Audience = $"https://{builder.Configuration["Auth0:Domain"]}/api/v2/";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = ClaimTypes.NameIdentifier
+        };
     }
 );
 
