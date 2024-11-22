@@ -1,6 +1,5 @@
 from enum import StrEnum
 from pydantic import BaseModel, HttpUrl
-from typing import Optional
 
 
 class Scope(StrEnum):

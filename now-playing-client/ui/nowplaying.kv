@@ -87,6 +87,18 @@
         on_text: root.change_base_url(self.text)
         size_hint_x: 1.0
 
+<StationBlock>:
+    size_hint_y: None
+    Label:
+        bold: True
+        size_hint_x: 0.5
+        text: "Station"
+    TextInput:
+        id: station
+        multiline: False
+        on_text: root.change_station(self.text)
+        size_hint_x: 1.0
+
 <FileMonitorActionBlock>:
     height: "45dp"
     size_hint_y: None
@@ -152,6 +164,7 @@
     AuthActionBlock:
     NowPlayingFileChooser:
     BaseUrlBlock:
+    StationBlock:
     FileMonitorActionBlock:
     ArtistBlock:
     TitleBlock:
