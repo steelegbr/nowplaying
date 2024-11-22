@@ -118,7 +118,6 @@ class AuthenticationService:
 
     def handle_token_success(self, request, result):
         self.__logger.info("%s: successful token request", self.LOG_PREFIX)
-        print(result)
         self.__token_response = TokenResponse.model_validate(result)
         self.__set_state(AuthenticationServiceState.Authenticated)
 

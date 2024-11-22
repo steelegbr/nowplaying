@@ -38,7 +38,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Register services
 
 builder.Services.AddDbContext<NowPlayingContext>(
-    options => options.UseInMemoryDatabase(builder.Configuration["DbConnectionString"])
+    options => options.UseInMemoryDatabase(databaseName: builder.Configuration["DbName"])
 );
 builder.Services.AddScoped<IStationRepository, EfStationRepository>();
 
