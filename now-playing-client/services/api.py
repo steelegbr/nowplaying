@@ -52,7 +52,7 @@ class ApiService:
             return
 
         settings = self.__settings_service.get()
-        url = f"{settings.base_url}Station/{quote(settings.station)}/nowplaying"
+        url = f"{settings.base_url}api/station/{quote(settings.station)}/nowplaying"
         self.__last_now_playing = now_playing
 
         self.__logger.info(
@@ -87,7 +87,7 @@ class ApiService:
 
     def __register_station(self):
         settings = self.__settings_service.get()
-        url = f"{settings.base_url}Station/"
+        url = f"{settings.base_url}api/station/"
 
         UrlRequest(
             url,

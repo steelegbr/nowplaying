@@ -6,7 +6,7 @@ using NowPlaying.Repositories;
 
 namespace NowPlaying.Controllers;
 
-[Route("Station")]
+[Route("api/station")]
 [ApiController]
 [Authorize]
 public class StationController : Controller
