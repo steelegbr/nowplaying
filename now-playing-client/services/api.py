@@ -67,7 +67,7 @@ class ApiService:
             on_success=self.now_playing_success,
             on_failure=self.now_playing_failure,
             on_error=self.now_playing_error,
-            req_body=self.__last_now_playing.model_dump_json() if now_playing else "{}",
+            req_body=self.__last_now_playing.model_dump_json() if now_playing else None,
             req_headers=headers,
         )
 

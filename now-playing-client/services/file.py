@@ -91,12 +91,12 @@ class FileMonitorService(FileSystemEventHandler):
         with open(event.src_path) as now_playing_handle:
             matches = search(r"(.+) - (.+) \((\d{0,4})\)", now_playing_handle.read())
 
-        try:
-            year = int(matches.group(3))
-        except ValueError:
-            year = None
-
         if matches:
+            try:
+                year = int(matches.group(3))
+            except ValueError:
+                year = None
+
             self.__now_playing = NowPlayingDto(
                 artist=matches.group(1), title=matches.group(2), year=year
             )
@@ -104,7 +104,8 @@ class FileMonitorService(FileSystemEventHandler):
                 "%s: detected now playing %s", self.LOG_PREFIX, self.__now_playing
             )
             self.__update_callbacks()
-            self.__api_service.update_now_playing(self.__now_playing)
         else:
             self.__now_playing = None
             self.__update_callbacks()
+
+        self.__api_service.update_now_playing(self.__now_playing)
