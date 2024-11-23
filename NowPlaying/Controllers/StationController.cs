@@ -32,6 +32,7 @@ public class StationController : Controller
         return Ok(station);
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public List<Station> GetStations()
     {
