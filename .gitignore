@@ -575,3 +575,7 @@ settings.ini
 # Now Playing Test File
 
 nowplaying.txt
+
+# SQLite DB
+
+*.db

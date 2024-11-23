@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using NowPlaying.Database;
 using NowPlaying.Models.Domain;
 
@@ -54,7 +55,7 @@ public class EfStationRepository : IStationRepository
 
     public Station? GetStationByName(string name)
     {
-        return nowPlayingContext.Stations.FirstOrDefault(station => station.Name == name);
+        return nowPlayingContext.Stations.Include("Song").FirstOrDefault(station => station.Name == name);
     }
 
     public void SetNowPlaying(Station station, Song? song)
