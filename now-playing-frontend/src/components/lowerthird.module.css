@@ -1,0 +1,67 @@
+.wrapper {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.lowerthird {
+    animation-duration: 3s;
+    animation-name: slide-in;
+    animation-fill-mode: forwards;
+    color: white;
+    background-color: purple;
+    position: fixed;
+    bottom: 70px;
+    padding: 10px;
+    width: 70vw;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, .5);
+}
+
+.lowerthirdoff {
+    animation-duration: 3s;
+    animation-name: slide-out;
+    animation-fill-mode: forwards;
+    color: white;
+    background-color: purple;
+    position: fixed;
+    bottom: 70px;
+    padding: 10px;
+    width: 70vw;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, .5);
+}
+
+.title {
+    font-size: 3em;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.artist {
+    font-size: 1em;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+@keyframes slide-in {
+    from {
+        translate: -150vw 0;
+        scale: 200% 1;
+    }
+
+    to {
+        translate: 0 0;
+        scale: 100% 1;
+    }
+}
+
+@keyframes slide-out {
+    from {
+        translate: 0 0;
+        scale: 100% 1;
+    }
+
+    to {
+        translate: -150vw 0;
+        scale: 200% 1;
+    }
+}

@@ -7,6 +7,7 @@ using NowPlaying.Repositories;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+const string CORS_POLICY_NAME = "NowPlayingCorsPolicy";
 
 // Core services
 
@@ -42,6 +43,21 @@ builder.Services.AddDbContext<NowPlayingContext>(
 );
 builder.Services.AddScoped<IStationRepository, EfStationRepository>();
 
+// Configure CORS
+
+builder.Services.AddCors(
+    options =>
+    {
+        options.AddPolicy(
+            name: CORS_POLICY_NAME,
+            policy =>
+            {
+                policy.WithOrigins("http://localhost:3000");
+            }
+        );
+    }
+);
+
 // Build the app
 
 var app = builder.Build();
@@ -62,6 +78,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Enable CORS
+
+app.UseCors(CORS_POLICY_NAME);
 
 // Light up the controllers and run the app
 

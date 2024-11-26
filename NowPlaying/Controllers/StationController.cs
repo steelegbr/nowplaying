@@ -6,7 +6,7 @@ using NowPlaying.Repositories;
 
 namespace NowPlaying.Controllers;
 
-[Route("Station")]
+[Route("api/station")]
 [ApiController]
 [Authorize]
 public class StationController : Controller
@@ -32,6 +32,7 @@ public class StationController : Controller
         return Ok(station);
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public List<Station> GetStations()
     {
