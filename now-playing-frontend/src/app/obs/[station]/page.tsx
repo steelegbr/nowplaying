@@ -1,13 +1,13 @@
-import LowerThird from "@/components/lowerthird";
+import NowPlaying from "@/components/nowplaying";
 
 type ObsViewParams = {
-    station: string
+    params: Promise<{ station: string }>
 }
 
-const ObsView = async (params: Promise<ObsViewParams>) => {
-    const station = (await params).station;
+const ObsView = async (params: ObsViewParams) => {
+    const station = (await params.params).station;
 
-    return <LowerThird />
+    return <NowPlaying station={station} />
 };
 
 export default ObsView;
