@@ -1,23 +1,41 @@
 "use client"
 
-import { SongDto } from "@/models/station"
+import { NowPlayingDto, SongDto } from "@/models/station"
 import style from "@/components/lowerthird.module.css";
 import { roboto } from "@/fonts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
+import { generateUrl } from "@/services/urlservice";
 
 type LowerThirdParams = {
-    song?: SongDto
+    station: string
 }
+
+const fetcher = (url: string) => fetch(url).then(res => res.json())
 
 const LowerThird = (params: LowerThirdParams) => {
     const [lastSong, setLastSong] = useState<SongDto>({ artist: "", title: "" });
+    const [song, setSong] = useState<SongDto | undefined>(undefined);
 
-    if (params.song) {
-        setLastSong(params.song);
-    }
+    const { data, isLoading } = useSWR(
+        generateUrl(`/api/station/${params.station}/nowplaying`),
+        fetcher,
+        { refreshInterval: 1000 }
+    );
+
+    useEffect(() => {
+        if (!isLoading) {
+            const api_song = (data as NowPlayingDto).song;
+            setSong(api_song);
+
+            if (api_song) {
+                setLastSong(api_song);
+            }
+        }
+    }, [data, isLoading]);
 
     return <div className={style.wrapper}>
-        <div className={`${params.song ? style.lowerthird : style.lowerthirdoff} ${roboto.className}`}>
+        <div className={`${song ? style.lowerthird : style.lowerthirdoff} ${roboto.className}`}>
             <p className={style.title}>{lastSong.title}</p>
             <p className={style.artist}>{lastSong.artist} {lastSong.year ? `(${lastSong.year})` : ""}</p>
         </div>
