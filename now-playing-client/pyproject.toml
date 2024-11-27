@@ -5,7 +5,7 @@ description = ""
 authors = ["Marc Steele <steelegbr@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.12, <3.14"
 kivy = "^2.3.0"
 pydantic = "^2.9.2"
 auth0-python = "^4.7.2"
@@ -14,6 +14,7 @@ watchdog = "^6.0.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.10.0"
+pyinstaller = "^6.11.1"
 
 [build-system]
 requires = ["poetry-core"]
