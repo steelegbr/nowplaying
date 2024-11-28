@@ -5,7 +5,7 @@ import style from "@/components/lowerthird.module.css";
 import { roboto } from "@/fonts";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { generateUrl } from "@/services/urlservice";
+import { generateUrl, getSettings } from "@/services/urlservice";
 
 type LowerThirdParams = {
     station: string
@@ -16,9 +16,10 @@ const fetcher = (url: string) => fetch(url).then(res => res.json())
 const LowerThird = (params: LowerThirdParams) => {
     const [lastSong, setLastSong] = useState<SongDto>({ artist: "", title: "" });
     const [song, setSong] = useState<SongDto | undefined>(undefined);
+    const [baseUrl, setBaseUrl] = useState<string>("");
 
     const { data, isLoading } = useSWR(
-        generateUrl(`/api/station/${params.station}/nowplaying`),
+        generateUrl(baseUrl, `/api/station/${params.station}/nowplaying`),
         fetcher,
         { refreshInterval: 1000 }
     );
@@ -33,6 +34,16 @@ const LowerThird = (params: LowerThirdParams) => {
             }
         }
     }, [data, isLoading]);
+
+    useEffect(() => {
+        if (!baseUrl) {
+            getSettings().then(
+                (settings) => {
+                    setBaseUrl(settings.base_url);
+                }
+            );
+        }
+    }, [baseUrl])
 
     return <div className={style.wrapper}>
         <div className={`${song ? style.lowerthird : style.lowerthirdoff} ${roboto.className}`}>
