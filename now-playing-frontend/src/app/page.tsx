@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { generateUrl } from "@/services/urlservice";
+import { generateUrl, getSettings } from "@/services/urlservice";
 import { useRouter } from "next/navigation";
 import { StationDto } from "@/models/station";
 
@@ -13,7 +13,8 @@ const Home = () => {
 
   useEffect(() => {
     const fetchStations = async () => {
-      const result = await fetch(generateUrl("/api/station"));
+      const settings = await getSettings();
+      const result = await fetch(generateUrl(settings.base_url, "/api/station"));
       const data = await result.json() as StationDto[];
       setStations(data);
 
