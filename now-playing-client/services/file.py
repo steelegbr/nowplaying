@@ -88,7 +88,7 @@ class FileMonitorService(FileSystemEventHandler):
 
     def on_modified(self, event: DirModifiedEvent | FileModifiedEvent) -> None:
         self.__logger.info("%s: now playing file change detected", self.LOG_PREFIX)
-        with open(event.src_path) as now_playing_handle:
+        with open(event.src_path, encoding="utf-8") as now_playing_handle:
             matches = search(r"(.+) - (.+) \((\d{0,4})\)", now_playing_handle.read())
 
         if matches:
