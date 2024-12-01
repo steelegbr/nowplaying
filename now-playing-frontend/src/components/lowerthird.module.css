@@ -55,24 +55,24 @@
 }
 
 @keyframes slide-in {
-    from {
+    0% {
         translate: -150vw 0;
         scale: 200% 1;
     }
 
-    to {
+    100% {
         translate: 0 0;
         scale: 100% 1;
     }
 }
 
 @keyframes slide-out {
-    from {
+    0% {
         translate: 0 0;
         scale: 100% 1;
     }
 
-    to {
+    100% {
         translate: -150vw 0;
         scale: 200% 1;
     }
