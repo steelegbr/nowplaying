@@ -89,7 +89,9 @@ class FileMonitorService(FileSystemEventHandler):
     def on_modified(self, event: DirModifiedEvent | FileModifiedEvent) -> None:
         self.__logger.info("%s: now playing file change detected", self.LOG_PREFIX)
         with open(event.src_path, encoding="utf-8") as now_playing_handle:
-            matches = search(r"(.+) - (.+) \((\d{0,4})\)", now_playing_handle.read())
+            file_content = now_playing_handle.read()
+            matches = search(r"(.+) - (.+) \((\d{0,4})\)", file_content)
+            matches_without_year = search(r"(.+) - (.+)", file_content)
 
         if matches:
             try:
@@ -102,6 +104,17 @@ class FileMonitorService(FileSystemEventHandler):
             )
             self.__logger.info(
                 "%s: detected now playing %s", self.LOG_PREFIX, self.__now_playing
+            )
+            self.__update_callbacks()
+        elif matches_without_year:
+            self.__now_playing = NowPlayingDto(
+                artist=matches_without_year.group(1),
+                title=matches_without_year.group(2),
+            )
+            self.__logger.info(
+                "%s: detected now playing %s without year",
+                self.LOG_PREFIX,
+                self.__now_playing,
             )
             self.__update_callbacks()
         else:
