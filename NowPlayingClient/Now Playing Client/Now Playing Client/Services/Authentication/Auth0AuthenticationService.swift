@@ -7,22 +7,23 @@
 
 import SwiftUI
 import Auth0
+import Combine
 
 class Auth0AuthenticationService: AuthenticationService {
     private static let shared = Auth0AuthenticationService()
+    private let credentialsManager = CredentialsManager(
+        authentication: Auth0.authentication(
+            clientId: UserDefaults.standard.string(forKey: Constants.settingsAuth0ClientId) ?? "NO_CLIENT_ID",
+            domain: UserDefaults.standard.string(forKey: Constants.settingsAuth0Domain) ?? "NO_DOMAIN"
+        )
+    )
+    private var cancellables = Set<AnyCancellable>()
     
     override var headerField: String { "Authorization" }
-    override var headerValue: String { "Bearer \(accessToken ?? "NO_TOKEN")" }
+    override var headerValue: String { "Bearer \(credentialsManager.credentials())" }
     
-    private var accessToken: String?
-    private var refreshToken: String? {
-        get {
-            UserDefaults.standard.string(forKey: Constants.settingsAuth0RefreshToken)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: Constants.settingsAuth0RefreshToken)
-        }
-    }
+    private var clientId: String { UserDefaults.standard.string(forKey: Constants.settingsAuth0ClientId) ?? "NO_CLIENT_ID" }
+    private var domain: String { UserDefaults.standard.string(forKey: Constants.settingsAuth0Domain) ?? "NO_DOMAIN" }
     
     override func authenticate() {
         print("Auth0 authenticate called.")
@@ -32,46 +33,37 @@ class Auth0AuthenticationService: AuthenticationService {
             return
         }
         
+        attemptLoginWithRefreshToken()
+    }
+    
+    private func attemptLoginWithRefreshToken() {
         state = .InProgress
         
-        let clientId = UserDefaults.standard.string(forKey: Constants.settingsAuth0ClientId) ?? "NO_CLIENT_ID"
-        let domain = UserDefaults.standard.string(forKey: Constants.settingsAuth0Domain) ?? "NO_DOMAIN"
-        print("Determined to be using \(clientId) for \(domain).")
-        
-        attemptLoginWithRefreshToken(clientId: clientId, domain: domain)
-        
-        
-    }
-    
-    private func attemptLoginWithRefreshToken(clientId: String, domain: String) {
-        if (refreshToken ?? "").isEmpty {
+        guard credentialsManager.canRenew() else {
             print("Skipping refresh token login as no refresh token available.")
-            attemptLogin(clientId: clientId, domain: domain)
+            attemptLogin()
+            return
         }
-        
-        print("Attempting login with refresh token.")
-        Auth0
-            .authentication(
-                clientId: clientId,
-                domain: domain
-            )
-            .renew(withRefreshToken: refreshToken!)
-            .start { result in
-                switch result {
-                    case .success(let credentials):
-                        print("Successfully used refresh token.")
-                        self.accessToken = credentials.idToken
-                        self.state = .Authenticated
-                    case .failure(let error):
-                        print("Failed with: \(error)")
-                        self.refreshToken = nil
-                        self.attemptLogin(clientId: clientId, domain: domain)
-                }
-            }
+
+         print("Attempting login with refresh token.")
+         credentialsManager
+             .renew()
+             .sink(
+                receiveCompletion: { completion in
+                     if case .failure(let error) = completion {
+                         print("Refresh token login failed: \(error)")
+                         self.attemptLogin()
+                     }
+                },
+                receiveValue: { credentials in
+                    print("Renewed credentials: \(credentials)")
+                    self.state = .Authenticated
+                })
+             .store(in: &self.cancellables)
         
     }
     
-    private func attemptLogin(clientId: String, domain: String) {
+    private func attemptLogin() {
         print("Falling back to normal authentication")
         
         Auth0
@@ -84,9 +76,14 @@ class Auth0AuthenticationService: AuthenticationService {
                 switch result {
                     case .success(let credentials):
                         print("Obtained credentials: \(credentials).")
-                        self.refreshToken = credentials.refreshToken
-                        self.accessToken = credentials.idToken
-                        self.state = .Authenticated
+                        let stored = self.credentialsManager.store(credentials: credentials)
+                        if stored {
+                            print("Updated credentials in CredentialsManager")
+                            self.state = .Authenticated
+                        } else {
+                            print("Failed to store credentials in CredentialsManager.")
+                            self.state = .Error
+                        }
                     case .failure(let error):
                         print("Failed with: \(error)")
                         self.state = .Error
