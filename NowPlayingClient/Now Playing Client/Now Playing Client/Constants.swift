@@ -12,4 +12,6 @@ struct Constants {
     static let settingsWatchFile = "WatchFile"
     static let settingsNowPlayingDomain = "NowPlayingDomain"
     static let settingsNowPlayingStation = "NowPlayingStation"
+    static let settingsAuthenticationMethod = "AuthenticationMethod"
+    static let authenticationMethodAuth0 = "Auth0"
 }

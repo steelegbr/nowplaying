@@ -14,7 +14,7 @@ struct SettingsView: View {
                 NowPlayingSettingsView()
             }
             Tab("Authentication", systemImage: "key.shield") {
-                Auth0SettingsView()
+                AuthenticationSettingsView()
             }
             Tab("File Watch", systemImage: "binoculars") {
                 FileWatchSettingsView()
