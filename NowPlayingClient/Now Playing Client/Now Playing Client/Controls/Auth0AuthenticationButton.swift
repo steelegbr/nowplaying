@@ -14,6 +14,7 @@ struct Auth0AuthenticationButton: View {
         Button(action: handleButtonPress) {
             Text(buttonText)
         }
+        .disabled(buttonDisabled)
     }
     
     var buttonText: String {
@@ -27,6 +28,10 @@ struct Auth0AuthenticationButton: View {
             case .Error:
                 "Log In"
         }
+    }
+    
+    var buttonDisabled: Bool {
+        auth0Service.state == .InProgress
     }
     
     func handleButtonPress() {
