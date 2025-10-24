@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using NowPlayingClient.ViewModels;
+using ReactiveUI;
 
 namespace NowPlayingClient;
 
@@ -26,6 +27,6 @@ public class ViewLocator : IDataTemplate
 
     public bool Match(object? data)
     {
-        return data is ViewModelBase;
+        return data is ReactiveObject;
     }
 }

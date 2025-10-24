@@ -1,6 +1,13 @@
-﻿namespace NowPlayingClient.ViewModels;
+using ReactiveUI;
+using NowPlayingClient.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public class MainWindowViewModel : ReactiveObject
 {
-    public string Greeting { get; } = "Welcome to Avalonia!";
+    public Auth0ViewModel Auth0Settings { get; }
+
+    public MainWindowViewModel(Auth0ViewModel auth0Settings)
+    {
+        Auth0Settings = auth0Settings;
+    }
+
 }

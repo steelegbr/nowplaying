@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
+using NowPlayingClient.ViewModels;
 using ReactiveUI;
 
 namespace NowPlayingClient.Services
@@ -20,7 +21,7 @@ namespace NowPlayingClient.Services
     public class Auth0AuthenticationService : ReactiveObject, IAuthenticationService
     {
         private readonly HttpClient _httpClient;
-        private readonly ReactiveAuthSettings _settings;
+        private readonly Auth0ViewModel _settings;
         private Auth0AuthenticationStatus _auth0Status = Auth0AuthenticationStatus.Unauthenticated;
         private string _accessToken = string.Empty;
 
@@ -35,7 +36,7 @@ namespace NowPlayingClient.Services
             _ => throw new System.NotImplementedException(),
         };
 
-        public Auth0AuthenticationService(HttpClient httpClient, ReactiveAuthSettings settings)
+        public Auth0AuthenticationService(HttpClient httpClient, Auth0ViewModel settings)
         {
             _httpClient = httpClient;
             _settings = settings;
@@ -89,16 +90,17 @@ namespace NowPlayingClient.Services
 
         private async Task<string> DeviceFlow(string refreshToken)
         {
+            await Task.Delay(0);
             throw new NotImplementedException();
         }
 
         private async Task<string> GetDeviceCode(string deviceCode)
         {
-            var url = $"https://{Properties.Settings.Default.Auth0Domain}/oauth/device/code";
+            var url = $"https://{_settings.Auth0Domain}/oauth/device/code";
             var requestBody = new Dictionary<string, string>
             {
-                {"audience", $"https://{Properties.Settings.Default.Auth0Domain}/api/v2/"},
-                { "client_id", Properties.Settings.Default.Auth0ClientId },
+                {"audience", $"https://{_settings.Auth0Domain}/api/v2/"},
+                { "client_id", _settings.Auth0ClientId },
                 { "scope", "openid profile" }
             };
 

@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:NowPlayingClient.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200"
+        x:Class="NowPlayingClient.Controls.Auth0Settings"
+        x:DataType="vm:Auth0ViewModel">
+
+  <Border Padding="12">
+    <StackPanel Spacing="8">
+      <TextBlock Text="Auth0 Settings" FontSize="16" FontWeight="Bold"/>
+
+      <Grid ColumnDefinitions="120,*,Auto" RowDefinitions="Auto,Auto,Auto" Margin="0,4,0,0">
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Domain:"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Watermark="your-domain.auth0.com"
+                 Text="{Binding Auth0Domain, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Client ID:"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Watermark="client id"
+                 Text="{Binding Auth0ClientId, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Refresh Token:"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Watermark="refresh token"
+                 Text="{Binding RefreshToken, Mode=TwoWay}" />
+      </Grid>
+
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,8,0,0">
+        <Button Content="Save" Command="{Binding SaveCommand}" />
+        <Button Content="Clear" Command="{Binding ClearCommand}" />
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</UserControl>

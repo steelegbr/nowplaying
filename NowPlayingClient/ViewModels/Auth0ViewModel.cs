@@ -1,12 +1,11 @@
 using ReactiveUI;
-using System.Reactive.Linq;
 using System;
 using System.IO;
 using System.Text.Json;
 
-namespace NowPlayingClient.Settings
+namespace NowPlayingClient.ViewModels
 {
-    public class ReactiveAuthSettings : ReactiveObject
+    public class Auth0ViewModel : ReactiveObject
     {
         private string _refreshToken = string.Empty;
         private string _auth0Domain = string.Empty;
@@ -31,19 +30,14 @@ namespace NowPlayingClient.Settings
         }
 
         private static string SettingsPath => 
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
-                        "NowPlayingClient", 
-                        "settings.json");
+            Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "NowPlayingClient",
+                "settings.json"
+            );
 
-        public ReactiveAuthSettings()
+        public Auth0ViewModel()
         {
-            // Auto-save settings when any property changes
-            this.WhenAnyPropertyChanged()
-                .Throttle(TimeSpan.FromSeconds(1))
-                .Subscribe(_ => Save());
-
-            // Load initial settings
-            Load();
         }
 
         private void Save()
@@ -62,7 +56,7 @@ namespace NowPlayingClient.Settings
                 return;
 
             var json = File.ReadAllText(SettingsPath);
-            var settings = JsonSerializer.Deserialize<ReactiveAuthSettings>(json);
+            var settings = JsonSerializer.Deserialize<Auth0ViewModel>(json);
             if (settings != null)
             {
                 RefreshToken = settings.RefreshToken;
