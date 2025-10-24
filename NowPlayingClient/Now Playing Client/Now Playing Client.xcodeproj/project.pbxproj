@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E45F8F3C2EABEFB1003EC1CE /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = E45F8F3B2EABEFB1003EC1CE /* Auth0 */; };
+		E46535DC2EAC19BE000ABB0F /* HTTPTypes in Frameworks */ = {isa = PBXBuildFile; productRef = E46535DB2EAC19BE000ABB0F /* HTTPTypes */; };
+		E46535DE2EAC19BE000ABB0F /* HTTPTypesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = E46535DD2EAC19BE000ABB0F /* HTTPTypesFoundation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E46535DC2EAC19BE000ABB0F /* HTTPTypes in Frameworks */,
+				E46535DE2EAC19BE000ABB0F /* HTTPTypesFoundation in Frameworks */,
 				E45F8F3C2EABEFB1003EC1CE /* Auth0 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +75,8 @@
 			name = "Now Playing Client";
 			packageProductDependencies = (
 				E45F8F3B2EABEFB1003EC1CE /* Auth0 */,
+				E46535DB2EAC19BE000ABB0F /* HTTPTypes */,
+				E46535DD2EAC19BE000ABB0F /* HTTPTypesFoundation */,
 			);
 			productName = "Now Playing Client";
 			productReference = E45F8EFD2EAB584F003EC1CE /* Now Playing Client.app */;
@@ -102,6 +108,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				E45F8F3A2EABEFB1003EC1CE /* XCRemoteSwiftPackageReference "Auth0" */,
+				E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E45F8EFE2EAB584F003EC1CE /* Products */;
@@ -376,6 +383,14 @@
 				minimumVersion = 2.15.1;
 			};
 		};
+		E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-http-types.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -383,6 +398,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E45F8F3A2EABEFB1003EC1CE /* XCRemoteSwiftPackageReference "Auth0" */;
 			productName = Auth0;
+		};
+		E46535DB2EAC19BE000ABB0F /* HTTPTypes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */;
+			productName = HTTPTypes;
+		};
+		E46535DD2EAC19BE000ABB0F /* HTTPTypesFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */;
+			productName = HTTPTypesFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

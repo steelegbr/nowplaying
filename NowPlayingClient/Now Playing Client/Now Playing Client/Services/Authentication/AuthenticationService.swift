@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import HTTPTypes
 
 enum AuthenticationStatus {
     case Unauthenticated
@@ -16,6 +17,9 @@ enum AuthenticationStatus {
 }
 
 protocol AuthenticationService {
+    var state: AuthenticationStatus { get }
+    var headerField: HTTPField.Name { get }
+    var headerValue: String { get }
     func authenticate()
     func logout()
     static func instance() -> any AuthenticationService

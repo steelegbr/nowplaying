@@ -8,6 +8,7 @@
 import SwiftUI
 import Auth0
 import Combine
+import HTTPTypes
 
 class Auth0AuthenticationService: AuthenticationService, ObservableObject {
     @Published
@@ -22,7 +23,7 @@ class Auth0AuthenticationService: AuthenticationService, ObservableObject {
     )
     private var cancellables = Set<AnyCancellable>()
     
-    var headerField: String { "Authorization" }
+    var headerField: HTTPField.Name { .authorization }
     var headerValue: String { "Bearer \(credentialsManager.credentials())" }
     
     private var clientId: String { UserDefaults.standard.string(forKey: Constants.settingsAuth0ClientId) ?? "NO_CLIENT_ID" }
