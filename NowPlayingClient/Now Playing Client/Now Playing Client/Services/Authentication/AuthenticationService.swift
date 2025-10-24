@@ -17,6 +17,8 @@ enum AuthenticationStatus {
 
 class AuthenticationService: ObservableObject {
     var objectWillChange: ObservableObjectPublisher
+    var headerField: String { "NO_AUTH_HEADER" }
+    var headerValue: String { "NO_AUTH_VALUE" }
     
     init() {
         self.objectWillChange = ObservableObjectPublisher()
