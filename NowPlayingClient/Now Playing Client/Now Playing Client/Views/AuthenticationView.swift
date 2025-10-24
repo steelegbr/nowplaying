@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AuthenticationView: View {
-    var authenticationService: AuthenticationService = AuthenticationService.getService()
+    @ObservedObject var authenticationService: AuthenticationService = AuthenticationService.getService()
     
     var body: some View {
         HStack {
