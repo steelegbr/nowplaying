@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Combine
-import HTTPTypes
+import HTTPTypesFoundation
 
 enum AuthenticationStatus {
     case Unauthenticated

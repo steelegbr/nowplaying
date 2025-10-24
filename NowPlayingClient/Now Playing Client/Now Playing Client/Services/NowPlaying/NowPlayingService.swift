@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import HTTPTypes
+import HTTPTypesFoundation
 
 class NowPlayingService {
     static let instance = NowPlayingService()
@@ -37,12 +37,18 @@ class NowPlayingService {
         return request
     }
     
-    private func createStation() async {
+    private func createStation() async -> Bool {
         let stationCreateBody = StationCreateDTO(name: stationName)
         let request = generateAuthenticatedRequest(method: .post, path: "/api/station/")
         print("Creating new station with name \(stationName)")
         
         let (responseBody, response) = try await URLSession.shared.upload(for: request, from: stationCreateBody.name.data(using: .utf8)!)
+        guard response.status == .created else {
+            print("Failed to create the station.")
+            return false
+        }
+        
+        return true
     }
     
 }

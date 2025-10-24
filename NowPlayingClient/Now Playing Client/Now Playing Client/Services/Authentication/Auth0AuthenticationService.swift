@@ -8,7 +8,7 @@
 import SwiftUI
 import Auth0
 import Combine
-import HTTPTypes
+import HTTPTypesFoundation
 
 class Auth0AuthenticationService: AuthenticationService, ObservableObject {
     @Published
