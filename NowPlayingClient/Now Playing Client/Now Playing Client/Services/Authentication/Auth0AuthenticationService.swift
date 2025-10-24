@@ -60,7 +60,9 @@ class Auth0AuthenticationService: AuthenticationService, ObservableObject {
                 },
                 receiveValue: { credentials in
                     print("Renewed credentials: \(credentials)")
-                    self.state = .Authenticated
+                    DispatchQueue.main.async {
+                        self.state = .Authenticated
+                    }
                 })
              .store(in: &self.cancellables)
         
@@ -82,20 +84,33 @@ class Auth0AuthenticationService: AuthenticationService, ObservableObject {
                         let stored = self.credentialsManager.store(credentials: credentials)
                         if stored {
                             print("Updated credentials in CredentialsManager")
-                            self.state = .Authenticated
+                            DispatchQueue.main.async {
+                                self.state = .Authenticated
+                            }
                         } else {
                             print("Failed to store credentials in CredentialsManager.")
-                            self.state = .Error
+                            DispatchQueue.main.async {
+                                self.state = .Error
+                            }
                         }
                     case .failure(let error):
                         print("Failed with: \(error)")
-                        self.state = .Error
+                        DispatchQueue.main.async {
+                            self.state = .Error
+                        }
                 }
             }
     }
     
     func logout() {
-        print("Auth0 logout called...")
+        print("Auth0 logout called.")
+        if credentialsManager.clear() {
+            print("Successfully logged out")
+            state = .Unauthenticated
+        } else {
+            print("Failed to log out")
+            state = .Error
+        }
     }
     
     class func instance() -> AuthenticationService {
