@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct AuthenticationView: View {
-    @ObservedObject var authenticationService: AuthenticationService = AuthenticationService.getService()
+    @AppStorage(Constants.settingsAuthenticationMethod) private var authenticationMethod: String?
     
     var body: some View {
         HStack {
-            AuthenticationButton(authenticationService: authenticationService)
-            AuthenticationStatusBanner(authenticationStatus: authenticationService.state)
+            switch authenticationMethod {
+            case Constants.authenticationMethodAuth0:
+                Auth0View()
+            default:
+                Text("Invalid authentication option!")
+            }
         }
     }
 }

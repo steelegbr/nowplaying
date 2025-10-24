@@ -42,12 +42,3 @@ struct AuthenticationStatusBanner: View {
         }
     }
 }
-
-struct AuthenticationStatusBanner_Previews: PreviewProvider {
-    static var previews: some View {
-        AuthenticationStatusBanner(authenticationStatus: .Authenticated)
-        AuthenticationStatusBanner(authenticationStatus: .Unauthenticated)
-        AuthenticationStatusBanner(authenticationStatus: .InProgress)
-        AuthenticationStatusBanner(authenticationStatus: .Error)
-    }
-}

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct AuthenticationButton: View {
-    var authenticationService: AuthenticationService
+struct Auth0AuthenticationButton: View {
+    @ObservedObject var auth0Service: Auth0AuthenticationService
     
     var body: some View {
         Button(action: handleButtonPress) {
@@ -17,7 +17,7 @@ struct AuthenticationButton: View {
     }
     
     var buttonText: String {
-        switch authenticationService.state {
+        switch auth0Service.state {
             case .Unauthenticated:
                 "Log In"
             case .InProgress:
@@ -30,10 +30,10 @@ struct AuthenticationButton: View {
     }
     
     func handleButtonPress() {
-        if authenticationService.state == .Unauthenticated || authenticationService.state == .Error {
-            authenticationService.authenticate()
-        } else if authenticationService.state == .Authenticated {
-            authenticationService.logout()
+        if auth0Service.state == .Unauthenticated || auth0Service.state == .Error {
+            auth0Service.authenticate()
+        } else if auth0Service.state == .Authenticated {
+            auth0Service.logout()
         }
     }
 }

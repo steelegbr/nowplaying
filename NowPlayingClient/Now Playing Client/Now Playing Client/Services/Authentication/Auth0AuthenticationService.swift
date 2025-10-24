@@ -9,8 +9,11 @@ import SwiftUI
 import Auth0
 import Combine
 
-class Auth0AuthenticationService: AuthenticationService {
-    private static let shared = Auth0AuthenticationService()
+class Auth0AuthenticationService: AuthenticationService, ObservableObject {
+    @Published
+    var state: AuthenticationStatus = .Unauthenticated
+    
+    static let shared = Auth0AuthenticationService()
     private let credentialsManager = CredentialsManager(
         authentication: Auth0.authentication(
             clientId: UserDefaults.standard.string(forKey: Constants.settingsAuth0ClientId) ?? "NO_CLIENT_ID",
@@ -19,13 +22,13 @@ class Auth0AuthenticationService: AuthenticationService {
     )
     private var cancellables = Set<AnyCancellable>()
     
-    override var headerField: String { "Authorization" }
-    override var headerValue: String { "Bearer \(credentialsManager.credentials())" }
+    var headerField: String { "Authorization" }
+    var headerValue: String { "Bearer \(credentialsManager.credentials())" }
     
     private var clientId: String { UserDefaults.standard.string(forKey: Constants.settingsAuth0ClientId) ?? "NO_CLIENT_ID" }
     private var domain: String { UserDefaults.standard.string(forKey: Constants.settingsAuth0Domain) ?? "NO_DOMAIN" }
     
-    override func authenticate() {
+    func authenticate() {
         print("Auth0 authenticate called.")
         
         if state == .Authenticated || state == .InProgress {
@@ -91,11 +94,11 @@ class Auth0AuthenticationService: AuthenticationService {
             }
     }
     
-    override func logout() {
+    func logout() {
         print("Auth0 logout called...")
     }
     
-    override class func instance() -> AuthenticationService {
+    class func instance() -> AuthenticationService {
         return shared
     }
     
