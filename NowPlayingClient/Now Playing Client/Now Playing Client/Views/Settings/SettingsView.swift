@@ -10,6 +10,9 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         TabView {
+            Tab("Now Playing", systemImage: "radio") {
+                NowPlayingSettingsView()
+            }
             Tab("Authentication", systemImage: "key.shield") {
                 Auth0SettingsView()
             }

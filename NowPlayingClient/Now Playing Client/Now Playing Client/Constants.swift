@@ -10,4 +10,6 @@ import Foundation
 struct Constants {
     static let settingsAuth0Domain = "Auth0Domain"
     static let settingsWatchFile = "WatchFile"
+    static let settingsNowPlayingDomain = "NowPlayingDomain"
+    static let settingsNowPlayingStation = "NowPlayingStation"
 }
