@@ -34,6 +34,7 @@ class NowPlayingService: ObservableObject {
     
         let authenticationService = getAuthenticationService()
         request.headerFields[authenticationService.headerField] = await authenticationService.getHeaderValue()
+        request.headerFields[.contentType] = "application/json"
         
         print("Generated \(method) request to \(request.url?.absoluteString ?? "INVALID_URL")")
         return request
@@ -41,16 +42,18 @@ class NowPlayingService: ObservableObject {
     
     private func createStation() async {
         let stationCreateBody = StationCreateDTO(name: stationName)
-        let request = await generateAuthenticatedRequest(method: .post, path: "/api/station/")
+        let request = await generateAuthenticatedRequest(method: .put, path: "/api/station/")
         print("Creating new station with name \(stationName)")
         
         do {
+            let encodedBody = try jsonEncoder.encode(stationCreateBody)
+            print("Encoded station creation body to be \(String(decoding: encodedBody, as: UTF8.self))")
             let (responseBody, response) = try await URLSession.shared.upload(
                 for: request,
-                from: jsonEncoder.encode(stationCreateBody)
+                from: encodedBody
             )
             guard response.status == .created else {
-                print("Failed to create the station. Error code \(response.status). Response: \(responseBody)")
+                print("Failed to create the station. Error code \(response.status). Response: \(String(decoding: responseBody, as: UTF8.self))")
                 return
             }
         } catch {
@@ -76,12 +79,14 @@ class NowPlayingService: ObservableObject {
         let request = await generateAuthenticatedRequest(method: .put, path: "/api/station/\(stationName)")
         
         do {
+            let encodedBody = try jsonEncoder.encode(newNowPlaying)
+            print("Encoded now playing body to be \(String(decoding: encodedBody, as: UTF8.self))")
             let (responseBody, response) = try await URLSession.shared.upload(
                 for: request,
                 from: jsonEncoder.encode(newNowPlaying)
             )
             guard response.status == .ok else {
-                print("Failed to Update now playing information for \(stationName). Error code \(response.status). Response: \(responseBody)")
+                print("Failed to Update now playing information for \(stationName). Error code \(response.status). Response: \(String(decoding: responseBody, as: UTF8.self))")
                 await self.createStation()
                 return
             }
