@@ -10,7 +10,7 @@ import Foundation
 import HTTPTypesFoundation
 
 class NowPlayingService: ObservableObject {
-    static let instance = NowPlayingService()
+    static let shared = NowPlayingService()
     private let jsonEncoder = JSONEncoder()
     
     @Published

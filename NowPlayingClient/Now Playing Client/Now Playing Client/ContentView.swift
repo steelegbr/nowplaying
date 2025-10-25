@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var nowPlayingService = NowPlayingService.shared
+    
     var body: some View {
-        VStack {
+        Form {
             AuthenticationView()
             FileWatchView()
+            NowPlayingView()
         }
         .padding()
     }
