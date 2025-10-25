@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct StationCreateDTO: Encodable {
+struct StationCreateDTO: Codable {
     var name: String
 }
