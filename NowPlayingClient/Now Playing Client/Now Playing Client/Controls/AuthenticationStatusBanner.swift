@@ -12,7 +12,7 @@ struct AuthenticationStatusBanner: View {
     
     var body: some View {
         Text(statusText)
-            .foregroundStyle(statusBackground)
+            .foregroundStyle(statusColour)
             .padding()
     }
     
@@ -29,7 +29,7 @@ struct AuthenticationStatusBanner: View {
         }
     }
     
-    private var statusBackground: Color {
+    private var statusColour: Color {
         switch authenticationStatus {
             case .Unauthenticated:
                 .red
