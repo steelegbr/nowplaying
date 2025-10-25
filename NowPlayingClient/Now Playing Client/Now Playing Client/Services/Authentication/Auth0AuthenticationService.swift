@@ -24,10 +24,19 @@ class Auth0AuthenticationService: AuthenticationService, ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     var headerField: HTTPField.Name { .authorization }
-    var headerValue: String { "Bearer \(credentialsManager.credentials())" }
     
     private var clientId: String { UserDefaults.standard.string(forKey: Constants.settingsAuth0ClientId) ?? "NO_CLIENT_ID" }
     private var domain: String { UserDefaults.standard.string(forKey: Constants.settingsAuth0Domain) ?? "NO_DOMAIN" }
+    
+    func getHeaderValue() async -> String {
+        do {
+            let credentials = try await credentialsManager.credentials()
+            return "Bearer \(credentials.accessToken)"
+        } catch {
+            print("Failed to get access token: \(error). Defaulting to 'Bearer NO_TOKEN'.")
+            return "Bearer NO_TOKEN"
+        }
+    }
     
     func authenticate() {
         print("Auth0 authenticate called.")

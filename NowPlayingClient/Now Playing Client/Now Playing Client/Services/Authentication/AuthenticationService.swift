@@ -19,7 +19,7 @@ enum AuthenticationStatus {
 protocol AuthenticationService {
     var state: AuthenticationStatus { get }
     var headerField: HTTPField.Name { get }
-    var headerValue: String { get }
+    func getHeaderValue() async -> String
     func authenticate()
     func logout()
     static func instance() -> any AuthenticationService

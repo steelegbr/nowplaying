@@ -14,9 +14,16 @@ struct NowPlayingView: View {
         Form {
             TextField("Artist", text: .constant(nowPlayingService.nowPlaying?.artist ?? ""))
             TextField("Title", text: .constant(nowPlayingService.nowPlaying?.title ?? ""))
-            TextField("Year", text: .constant("\(nowPlayingService.nowPlaying?.year!, default: "")"))
+            TextField("Year", text: .constant(displayYear))
         }
         .padding()
+    }
+    
+    private var displayYear: String {
+        if nowPlayingService.nowPlaying?.year == nil {
+            return ""
+        }
+        return "\(nowPlayingService.nowPlaying?.year!)"
     }
 }
 

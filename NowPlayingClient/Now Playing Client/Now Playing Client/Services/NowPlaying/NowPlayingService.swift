@@ -17,18 +17,14 @@ class NowPlayingService: ObservableObject {
     var nowPlaying: NowPlayingDTO?
     
     private var stationName: String {
-        let _stationName = UserDefaults.standard.string(forKey: Constants.settingsNowPlayingStation) ?? ""
-        print("Determined station name to be \(_stationName).")
-        return _stationName
+        UserDefaults.standard.string(forKey: Constants.settingsNowPlayingStation) ?? ""
     }
     
     private var domain: String {
-        let _domain = UserDefaults.standard.string(forKey: Constants.settingsNowPlayingDomain) ?? ""
-        print("Determined domain to be \(_domain)")
-        return _domain
+        UserDefaults.standard.string(forKey: Constants.settingsNowPlayingDomain) ?? ""
     }
     
-    private func generateAuthenticatedRequest(method: HTTPRequest.Method, path: String) -> HTTPRequest {
+    private func generateAuthenticatedRequest(method: HTTPRequest.Method, path: String) async -> HTTPRequest {
         var request = HTTPRequest(
             method: method,
             scheme: "https",
@@ -37,7 +33,7 @@ class NowPlayingService: ObservableObject {
         )
     
         let authenticationService = getAuthenticationService()
-        request.headerFields[authenticationService.headerField] = authenticationService.headerValue
+        request.headerFields[authenticationService.headerField] = await authenticationService.getHeaderValue()
         
         print("Generated \(method) request to \(request.url?.absoluteString ?? "INVALID_URL")")
         return request
@@ -45,7 +41,7 @@ class NowPlayingService: ObservableObject {
     
     private func createStation() async {
         let stationCreateBody = StationCreateDTO(name: stationName)
-        let request = generateAuthenticatedRequest(method: .post, path: "/api/station/")
+        let request = await generateAuthenticatedRequest(method: .post, path: "/api/station/")
         print("Creating new station with name \(stationName)")
         
         do {
@@ -77,7 +73,7 @@ class NowPlayingService: ObservableObject {
             print("Setting now playing for \(stationName) to be \(newNowPlaying!.artist) - \(newNowPlaying!.title)")
         }
         
-        let request = generateAuthenticatedRequest(method: .put, path: "api/station/\(stationName)")
+        let request = await generateAuthenticatedRequest(method: .put, path: "/api/station/\(stationName)")
         
         do {
             let (responseBody, response) = try await URLSession.shared.upload(

@@ -1,5 +1,5 @@
 {
-  "originHash" : "f3fdc688ed05d4245be5c65a467938b5f12f89c2580f05ef8627be75395d23a8",
+  "originHash" : "641c78f89895fede95eb51a87397ad528d56c9a2c0e0df0ca6ad48d54ecfd369",
   "pins" : [
     {
       "identity" : "auth0.swift",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "259b5d5f303d49203a6cc8415b56100d8b7584ce",
         "version" : "2.15.1"
+      }
+    },
+    {
+      "identity" : "filewatcher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/eonist/FileWatcher.git",
+      "state" : {
+        "revision" : "e67c2a99502eade343fecabeca8c57e749a55b59",
+        "version" : "0.2.3"
       }
     },
     {

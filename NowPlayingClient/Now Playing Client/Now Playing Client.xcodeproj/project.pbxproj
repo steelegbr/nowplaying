@@ -10,6 +10,7 @@
 		E45F8F3C2EABEFB1003EC1CE /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = E45F8F3B2EABEFB1003EC1CE /* Auth0 */; };
 		E46535DC2EAC19BE000ABB0F /* HTTPTypes in Frameworks */ = {isa = PBXBuildFile; productRef = E46535DB2EAC19BE000ABB0F /* HTTPTypes */; };
 		E46535DE2EAC19BE000ABB0F /* HTTPTypesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = E46535DD2EAC19BE000ABB0F /* HTTPTypesFoundation */; };
+		E46536292EAD5CE5000ABB0F /* FileWatcher in Frameworks */ = {isa = PBXBuildFile; productRef = E46536282EAD5CE5000ABB0F /* FileWatcher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E46535DC2EAC19BE000ABB0F /* HTTPTypes in Frameworks */,
+				E46536292EAD5CE5000ABB0F /* FileWatcher in Frameworks */,
 				E46535DE2EAC19BE000ABB0F /* HTTPTypesFoundation in Frameworks */,
 				E45F8F3C2EABEFB1003EC1CE /* Auth0 in Frameworks */,
 			);
@@ -77,6 +79,7 @@
 				E45F8F3B2EABEFB1003EC1CE /* Auth0 */,
 				E46535DB2EAC19BE000ABB0F /* HTTPTypes */,
 				E46535DD2EAC19BE000ABB0F /* HTTPTypesFoundation */,
+				E46536282EAD5CE5000ABB0F /* FileWatcher */,
 			);
 			productName = "Now Playing Client";
 			productReference = E45F8EFD2EAB584F003EC1CE /* Now Playing Client.app */;
@@ -109,6 +112,7 @@
 			packageReferences = (
 				E45F8F3A2EABEFB1003EC1CE /* XCRemoteSwiftPackageReference "Auth0" */,
 				E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */,
+				E46536272EAD5CE5000ABB0F /* XCRemoteSwiftPackageReference "FileWatcher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E45F8EFE2EAB584F003EC1CE /* Products */;
@@ -272,20 +276,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 28MXA9ANPU;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
-				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
-				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
-				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
-				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
-				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
-				ENABLE_RESOURCE_ACCESS_USB = NO;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -317,20 +310,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 28MXA9ANPU;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
-				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
-				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
-				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
-				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
-				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
-				ENABLE_RESOURCE_ACCESS_USB = NO;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -391,6 +373,14 @@
 				minimumVersion = 1.5.1;
 			};
 		};
+		E46536272EAD5CE5000ABB0F /* XCRemoteSwiftPackageReference "FileWatcher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/eonist/FileWatcher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -408,6 +398,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */;
 			productName = HTTPTypesFoundation;
+		};
+		E46536282EAD5CE5000ABB0F /* FileWatcher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E46536272EAD5CE5000ABB0F /* XCRemoteSwiftPackageReference "FileWatcher" */;
+			productName = FileWatcher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
