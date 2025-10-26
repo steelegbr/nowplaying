@@ -11,10 +11,12 @@
 		E46535DC2EAC19BE000ABB0F /* HTTPTypes in Frameworks */ = {isa = PBXBuildFile; productRef = E46535DB2EAC19BE000ABB0F /* HTTPTypes */; };
 		E46535DE2EAC19BE000ABB0F /* HTTPTypesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = E46535DD2EAC19BE000ABB0F /* HTTPTypesFoundation */; };
 		E46536292EAD5CE5000ABB0F /* FileWatcher in Frameworks */ = {isa = PBXBuildFile; productRef = E46536282EAD5CE5000ABB0F /* FileWatcher */; };
+		E4B3654C2EAE1B0F009EB2A5 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = E4B3654B2EAE1B0F009EB2A5 /* AppIcon.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E45F8EFD2EAB584F003EC1CE /* Now Playing Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Now Playing Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B3654B2EAE1B0F009EB2A5 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -43,6 +45,7 @@
 		E45F8EF42EAB584F003EC1CE = {
 			isa = PBXGroup;
 			children = (
+				E4B3654B2EAE1B0F009EB2A5 /* AppIcon.icon */,
 				E45F8EFF2EAB584F003EC1CE /* Now Playing Client */,
 				E45F8EFE2EAB584F003EC1CE /* Products */,
 			);
@@ -129,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4B3654C2EAE1B0F009EB2A5 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +274,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Now Playing Client/Now Playing Client.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -304,6 +309,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Now Playing Client/Now Playing Client.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
