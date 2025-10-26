@@ -76,7 +76,7 @@ class NowPlayingService: ObservableObject {
             print("Setting now playing for \(stationName) to be \(newNowPlaying!.artist) - \(newNowPlaying!.title)")
         }
         
-        let request = await generateAuthenticatedRequest(method: .put, path: "/api/station/\(stationName)")
+        let request = await generateAuthenticatedRequest(method: .put, path: "/api/station/\(stationName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)/nowplaying")
         
         do {
             let encodedBody = try jsonEncoder.encode(newNowPlaying)
@@ -85,7 +85,7 @@ class NowPlayingService: ObservableObject {
                 for: request,
                 from: jsonEncoder.encode(newNowPlaying)
             )
-            guard response.status == .ok else {
+            guard response.status == .ok || response.status == .noContent else {
                 print("Failed to Update now playing information for \(stationName). Error code \(response.status). Response: \(String(decoding: responseBody, as: UTF8.self))")
                 await self.createStation()
                 return
