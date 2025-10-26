@@ -86,7 +86,8 @@ class Auth0AuthenticationService: AuthenticationService, ObservableObject {
                 clientId: clientId,
                 domain: domain
             )
-            .scope("openid profile email offline_access")
+            .scope("openid profile offline_access")
+            .audience("https://\(domain)/api/v2/")
             .start { result in
                 switch result {
                     case .success(let credentials):
