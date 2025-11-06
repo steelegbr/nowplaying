@@ -36,6 +36,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'mozilla_django_oidc.middleware.SessionRefresh',
 ]
 
 ROOT_URLCONF = "nowplaying.urls"
@@ -113,3 +114,15 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTHENTICATION_BACKENDS = [
+    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+]
+
+OIDC_RP_CLIENT_ID = env("OIDC_RP_CLIENT_ID")
+OIDC_RP_CLIENT_SECRET = env("OIDC_RP_CLIENT_SECRET")
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"https://{env('OIDC_DOMAIN')}/authorize"
+OIDC_OP_TOKEN_ENDPOINT = f"https://{env('OIDC_DOMAIN')}/oauth/token"
+OIDC_OP_USER_ENDPOINT = f"https://{env('OIDC_DOMAIN')}/userinfo"
+OIDC_RP_SIGN_ALGO = "RS256"
+OIDC_OP_JWKS_ENDPOINT = f"https://{env('OIDC_DOMAIN')}/.well-known/jwks.json"
