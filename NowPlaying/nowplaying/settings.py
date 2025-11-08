@@ -37,7 +37,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'mozilla_django_oidc.middleware.SessionRefresh',
+    "mozilla_django_oidc.middleware.SessionRefresh",
 ]
 
 ROOT_URLCONF = "nowplaying.urls"
@@ -117,7 +117,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTHENTICATION_BACKENDS = [
-    'nowplaying.authentication.NowPlayingOIDCAuthenticationBackend',
+    "nowplaying.authentication.NowPlayingOIDCAuthenticationBackend",
 ]
 
 OIDC_RP_CLIENT_ID = env("OIDC_RP_CLIENT_ID")

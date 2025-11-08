@@ -1,6 +1,7 @@
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 from django.conf import settings
 
+
 class NowPlayingOIDCAuthenticationBackend(OIDCAuthenticationBackend):
     def create_user(self, claims):
         user = super().create_user(claims)
