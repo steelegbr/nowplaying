@@ -1,3 +1,4 @@
+
 "use client"
 
 import { NowPlayingDto, SongDto } from "@/models/station"
@@ -11,39 +12,35 @@ type LowerThirdParams = {
     station: string
 }
 
-const fetcher = (url: string) => fetch(url).then(res => res.json())
+const fetcher = (url: string): Promise<NowPlayingDto> =>
+    fetch(url).then(res => res.json());
 
 const LowerThird = (params: LowerThirdParams) => {
     const [lastSong, setLastSong] = useState<SongDto>({ artist: "", title: "" });
-    const [song, setSong] = useState<SongDto | undefined>(undefined);
     const [baseUrl, setBaseUrl] = useState<string>("");
 
-    const { data, isLoading } = useSWR(
+    const { data } = useSWR<NowPlayingDto>(
         generateUrl(baseUrl, `/api/station/${params.station}/nowplaying`),
         fetcher,
-        { refreshInterval: 1000 }
-    );
-
-    useEffect(() => {
-        if (!isLoading) {
-            const api_song = (data as NowPlayingDto).song;
-            setSong(api_song);
-
-            if (api_song) {
-                setLastSong(api_song);
+        {
+            refreshInterval: 1000,
+            onSuccess: (response) => {
+                if (response.song) {
+                    setLastSong(response.song);
+                }
             }
         }
-    }, [data, isLoading]);
+    );
+
+    const song = data?.song;
 
     useEffect(() => {
         if (!baseUrl) {
-            getSettings().then(
-                (settings) => {
-                    setBaseUrl(settings.base_url);
-                }
-            );
+            getSettings().then((settings) => {
+                setBaseUrl(settings.base_url);
+            });
         }
-    }, [baseUrl])
+    }, [baseUrl]);
 
     return <div className={style.wrapper}>
         <div className={`${song ? style.lowerthird : style.lowerthirdoff} ${roboto.className}`}>
