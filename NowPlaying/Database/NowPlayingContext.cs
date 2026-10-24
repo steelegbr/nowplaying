@@ -10,6 +10,6 @@ public class NowPlayingContext : DbContext
 
     public NowPlayingContext(DbContextOptions<NowPlayingContext> options) : base(options)
     {
-        
+
     }
 }
