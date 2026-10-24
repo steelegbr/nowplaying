@@ -25,7 +25,7 @@ builder.Services.AddSerilog(
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(
-    options => 
+    options =>
     {
         options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
         options.Audience = $"https://{builder.Configuration["Auth0:Domain"]}/api/v2/";

@@ -60,11 +60,11 @@ public class StationController : Controller
             return NotFound();
         }
 
-        var song = nowPlayingDto == null ? null : new Song 
-        { 
-            Artist = nowPlayingDto.Artist, 
-            Title = nowPlayingDto.Title, 
-            Year = nowPlayingDto.Year 
+        var song = nowPlayingDto == null ? null : new Song
+        {
+            Artist = nowPlayingDto.Artist,
+            Title = nowPlayingDto.Title,
+            Year = nowPlayingDto.Year
         };
         stationRepository.SetNowPlaying(station, song);
         return Ok(song);
