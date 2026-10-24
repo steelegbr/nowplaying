@@ -46,7 +46,7 @@ jobs:
         run: npm run build
 
   dotnet:
-    name: .NET - Lint and Build
+    name: Backend - Lint and Build
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
