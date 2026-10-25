@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E45F8F3C2EABEFB1003EC1CE /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = E45F8F3B2EABEFB1003EC1CE /* Auth0 */; };
 		E46535DC2EAC19BE000ABB0F /* HTTPTypes in Frameworks */ = {isa = PBXBuildFile; productRef = E46535DB2EAC19BE000ABB0F /* HTTPTypes */; };
 		E46535DE2EAC19BE000ABB0F /* HTTPTypesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = E46535DD2EAC19BE000ABB0F /* HTTPTypesFoundation */; };
 		E46536292EAD5CE5000ABB0F /* FileWatcher in Frameworks */ = {isa = PBXBuildFile; productRef = E46536282EAD5CE5000ABB0F /* FileWatcher */; };
@@ -35,7 +34,6 @@
 				E46535DC2EAC19BE000ABB0F /* HTTPTypes in Frameworks */,
 				E46536292EAD5CE5000ABB0F /* FileWatcher in Frameworks */,
 				E46535DE2EAC19BE000ABB0F /* HTTPTypesFoundation in Frameworks */,
-				E45F8F3C2EABEFB1003EC1CE /* Auth0 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +77,6 @@
 			);
 			name = "Now Playing Client";
 			packageProductDependencies = (
-				E45F8F3B2EABEFB1003EC1CE /* Auth0 */,
 				E46535DB2EAC19BE000ABB0F /* HTTPTypes */,
 				E46535DD2EAC19BE000ABB0F /* HTTPTypesFoundation */,
 				E46536282EAD5CE5000ABB0F /* FileWatcher */,
@@ -113,7 +110,6 @@
 			mainGroup = E45F8EF42EAB584F003EC1CE;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				E45F8F3A2EABEFB1003EC1CE /* XCRemoteSwiftPackageReference "Auth0" */,
 				E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */,
 				E46536272EAD5CE5000ABB0F /* XCRemoteSwiftPackageReference "FileWatcher" */,
 			);
@@ -363,14 +359,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E45F8F3A2EABEFB1003EC1CE /* XCRemoteSwiftPackageReference "Auth0" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/auth0/Auth0.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.15.1;
-			};
-		};
 		E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-http-types.git";
@@ -390,11 +378,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E45F8F3B2EABEFB1003EC1CE /* Auth0 */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E45F8F3A2EABEFB1003EC1CE /* XCRemoteSwiftPackageReference "Auth0" */;
-			productName = Auth0;
-		};
 		E46535DB2EAC19BE000ABB0F /* HTTPTypes */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E46535DA2EAC19BE000ABB0F /* XCRemoteSwiftPackageReference "swift-http-types" */;

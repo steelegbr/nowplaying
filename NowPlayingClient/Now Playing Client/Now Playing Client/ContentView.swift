@@ -12,7 +12,6 @@ struct ContentView: View {
     
     var body: some View {
         Form {
-            AuthenticationView()
             FileWatchView()
             NowPlayingView()
         }
