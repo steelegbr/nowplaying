@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 struct FileWatchSettingsView: View {
     @State private var showPicker = false
     @AppStorage(Constants.settingsWatchFile) private var watchFile: URL?
-    
+
     var body: some View {
         HStack {
             Text("\(watchFile?.absoluteString ?? "No file selected!")")
@@ -32,8 +32,7 @@ struct FileWatchSettingsView: View {
                 }
             }
         }.padding()
-        
-        
+
     }
 }
 
@@ -42,4 +41,3 @@ struct FileWatchSettingsView_Previews: PreviewProvider {
         FileWatchSettingsView()
     }
 }
-

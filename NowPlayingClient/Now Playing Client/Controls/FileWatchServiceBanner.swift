@@ -9,13 +9,13 @@ import SwiftUI
 
 struct FileWatchServiceBanner: View {
     @ObservedObject var fileWatchService: FileWatchService
-    
+
     var body: some View {
         Text(statusText)
             .foregroundStyle(statusColour)
             .padding()
     }
-    
+
     private var statusText: String {
         switch fileWatchService.status {
             case .Running:
@@ -24,7 +24,7 @@ struct FileWatchServiceBanner: View {
                 "Stopped"
         }
     }
-    
+
     private var statusColour: Color {
         switch fileWatchService.status {
             case .Stopped:

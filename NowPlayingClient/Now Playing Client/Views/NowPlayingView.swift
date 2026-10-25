@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NowPlayingView: View {
     @ObservedObject var nowPlayingService = NowPlayingService.shared
-    
+
     var body: some View {
         Form {
             TextField("Artist", text: .constant(nowPlayingService.nowPlaying?.artist ?? ""))
@@ -18,7 +18,7 @@ struct NowPlayingView: View {
         }
         .padding()
     }
-    
+
     private var displayYear: String {
         if nowPlayingService.nowPlaying?.year == nil {
             return ""

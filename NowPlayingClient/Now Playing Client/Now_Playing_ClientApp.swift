@@ -13,7 +13,7 @@ struct Now_Playing_ClientApp: App {
         WindowGroup {
             ContentView()
         }
-        
+
         Settings {
             SettingsView()
         }

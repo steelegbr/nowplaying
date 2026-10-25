@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FileWatchView: View {
     @ObservedObject var fileWatchService = FileWatchService.shared
-    
+
     var body: some View {
         HStack {
             FileWatchServiceButton(fileWatchService: fileWatchService)
@@ -17,7 +17,6 @@ struct FileWatchView: View {
         }
     }
 }
-
 
 struct FileWatchView_Previews: PreviewProvider {
     static var previews: some View {

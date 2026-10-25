@@ -9,13 +9,13 @@ import SwiftUI
 
 struct FileWatchServiceButton: View {
     @ObservedObject var fileWatchService: FileWatchService
-    
+
     var body: some View {
         Button(action: handleButtonPress) {
             Text(buttonText)
         }
     }
-    
+
     var buttonText: String {
         switch fileWatchService.status {
             case .Stopped:
@@ -24,7 +24,7 @@ struct FileWatchServiceButton: View {
                 "Stop"
         }
     }
-    
+
     func handleButtonPress() {
         switch fileWatchService.status {
             case .Stopped:
