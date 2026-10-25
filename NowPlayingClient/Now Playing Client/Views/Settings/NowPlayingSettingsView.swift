@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NowPlayingSettingsView: View {
     @AppStorage(Constants.settingsNowPlayingDomain) private
-        var nowPlayingDomain = "nowplaying.solidradio.co.uk"
+        var nowPlayingDomain = "clock.solidradio.co.uk"
     @AppStorage(Constants.settingsNowPlayingStation) private
         var nowPlayingStation: String = ""
 
