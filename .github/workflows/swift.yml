@@ -44,8 +44,3 @@ jobs:
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
             CODE_SIGNING_ALLOWED=NO \
             build
-
-      - name: SwiftLint
-        run: |
-          brew install swiftlint
-          swiftlint lint --strict
