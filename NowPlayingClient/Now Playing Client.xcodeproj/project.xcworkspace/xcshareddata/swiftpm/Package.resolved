@@ -1,0 +1,24 @@
+{
+  "originHash" : "7d880a8996b1d58f809afdbfbd74b73fd3a84c52055f9e7683126454e764380d",
+  "pins" : [
+    {
+      "identity" : "filewatcher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/eonist/FileWatcher.git",
+      "state" : {
+        "revision" : "e67c2a99502eade343fecabeca8c57e749a55b59",
+        "version" : "0.2.3"
+      }
+    },
+    {
+      "identity" : "swift-http-types",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-http-types.git",
+      "state" : {
+        "revision" : "bff4b6903cdc99dda49649dd52f46c11cfd3ed50",
+        "version" : "1.8.0"
+      }
+    }
+  ],
+  "version" : 3
+}

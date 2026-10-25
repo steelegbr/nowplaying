@@ -2,73 +2,22 @@
 version: 2
 
 updates:
-  # Frontend npm dependencies
-  - package-ecosystem: npm
-    directory: /now-playing-frontend
-    schedule:
-      interval: weekly
-      day: monday
-      time: "06:00"
-      timezone: Europe/London
-    open-pull-requests-limit: 5
-    groups:
-      npm-minor-and-patch:
-        patterns:
-          - "*"
-        update-types:
-          - minor
-          - patch
-
-  # Backend NuGet dependencies
-  - package-ecosystem: nuget
-    directory: /NowPlaying
-    schedule:
-      interval: weekly
-      day: monday
-      time: "06:10"
-      timezone: Europe/London
-    open-pull-requests-limit: 5
-    groups:
-      nuget-minor-and-patch:
-        patterns:
-          - "*"
-        update-types:
-          - minor
-          - patch
-
-  # Server container base images
-  - package-ecosystem: docker
-    directory: /NowPlaying
-    schedule:
-      interval: weekly
-      day: monday
-      time: "06:20"
-      timezone: Europe/London
-    open-pull-requests-limit: 3
-
-  # Web UI container base images
-  - package-ecosystem: docker
-    directory: /now-playing-frontend
-    schedule:
-      interval: weekly
-      day: monday
-      time: "06:30"
-      timezone: Europe/London
-    open-pull-requests-limit: 3
-
-  # Actions used by GitHub workflows
+  # Keep GitHub Actions runners and actions up to date
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
-      day: monday
-      time: "06:40"
-      timezone: Europe/London
-    open-pull-requests-limit: 5
     groups:
-      github-actions-minor-and-patch:
+      github-actions:
         patterns:
           - "*"
-        update-types:
-          - minor
-          - patch
+
+  # Keep Swift Package Manager dependencies up to date
+  - package-ecosystem: swift
+    directory: /NowPlayingClient
+    schedule:
+      interval: weekly
+    groups:
+      swift-packages:
+        patterns:
+          - "*"

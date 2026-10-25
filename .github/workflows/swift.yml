@@ -1,0 +1,46 @@
+
+name: Swift Quality
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: swift-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and Test macOS app
+    runs-on: macos-latest
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: NowPlayingClient
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Show toolchain versions
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Build
+        run: |
+          xcodebuild \
+            -project "Now Playing Client.xcodeproj" \
+            -scheme "Now Playing Client" \
+            -configuration Debug \
+            -destination 'platform=macOS' \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            build
