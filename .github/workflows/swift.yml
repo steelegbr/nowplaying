@@ -21,6 +21,10 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 20
 
+    defaults:
+      run:
+        working-directory: NowPlayingClient
+
     steps:
       - name: Check out source
         uses: actions/checkout@v7
